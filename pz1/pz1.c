@@ -30,16 +30,16 @@ void zadanie1() {
 
     printf("1. Y(x) = x^3 + 2x + sin(x)\n");
     printf("2. V(x)\n");
-    printf("Выберите функцию (1 или 2): ");
+    printf("Р’С‹Р±РµСЂРёС‚Рµ С„СѓРЅРєС†РёСЋ (1 РёР»Рё 2): ");
 
     if (scanf("%d", &choice) != 1) {
-        printf("Ошибка ввода!\n");
+        printf("РћС€РёР±РєР° РІРІРѕРґР°!\n");
         return;
     }
 
-    printf("Введите x: ");
+    printf("Р’РІРµРґРёС‚Рµ x: ");
     if (scanf("%lf", &x) != 1) {
-        printf("Ошибка ввода!\n");
+        printf("РћС€РёР±РєР° РІРІРѕРґР°!\n");
         return;
     }
 
@@ -50,7 +50,7 @@ void zadanie1() {
         printf("V(%.4lf) = %.4lf\n", x, calculate_V(x));
     }
     else {
-        printf("Неверный выбор.\n");
+        printf("РќРµРІРµСЂРЅС‹Р№ РІС‹Р±РѕСЂ.\n");
     }
 }
 
