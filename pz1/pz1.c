@@ -4,59 +4,68 @@
 #include <locale.h>
 #include <windows.h>
 
-double calculate_Y(double x) {
-    return pow(x, 3) + 2 * x + sin(x);
+int calculate_Y(double x, double* result) {
+    *result = pow(x, 3) + 2 * x + sin(x);
+    return 1;
 }
 
-double calculate_V(double x) {
-    double result;
-
+int calculate_V(double x, double* result) {
     if (x < -1) {
-        result = log(1 + pow(x, 2)) - 2;
+        *result = log(1 + pow(x, 2)) - 2;
     }
     else if (x >= -1 && x <= 1) {
-        result = pow(x, 2) - 1;
+        *result = pow(x, 2) - 1;
     }
     else {
-        result = sqrt(x - 1) / (1 + pow(x, 2));
+        *result = sqrt(x - 1) / (1 + pow(x, 2));
     }
-
-    return result;
+    return 1;
 }
 
-void zadanie1() {
-    double x;
-    int choice;
+void print_table(int func_choice, double a, double b, double h) {
+    double x, res;
 
-    printf("1. Y(x) = x^3 + 2x + sin(x)\n");
-    printf("2. V(x)\n");
-    printf("Выберите функцию (1 или 2): ");
-
-    if (scanf("%d", &choice) != 1) {
-        printf("Ошибка ввода!\n");
+    if (h == 0) {
+        printf("Ошибка: шаг не может быть равен нулю.\n");
         return;
     }
 
-    printf("Введите x: ");
-    if (scanf("%lf", &x) != 1) {
-        printf("Ошибка ввода!\n");
-        return;
-    }
+    printf("\n x\t\t%s\n", (func_choice == 1) ? "Y(x)" : "V(x)");
 
-    if (choice == 1) {
-        printf("Y(%.4lf) = %.4lf\n", x, calculate_Y(x));
-    }
-    else if (choice == 2) {
-        printf("V(%.4lf) = %.4lf\n", x, calculate_V(x));
-    }
-    else {
-        printf("Неверный выбор.\n");
+    for (x = a; (h > 0) ? (x <= b + 1e-9) : (x >= b - 1e-9); x += h) {
+        if (func_choice == 1) {
+            calculate_Y(x, &res);
+        }
+        else {
+            calculate_V(x, &res);
+        }
+        printf("%.4lf\t\t%.4lf\n", x, res);
     }
 }
 
 int main() {
     setlocale(LC_ALL, "RUS");
-    zadanie1();
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    int choice;
+    double a, b, h;
+
+    printf("1. Y(x) = x^3 + 2x + sin(x)\n");
+    printf("2. V(x)\n");
+    printf("Выберите функцию (1 или 2): ");
+    scanf("%d", &choice);
+
+    printf("Введите начало интервала: ");
+    scanf("%lf", &a);
+
+    printf("Введите конец интервала: ");
+    scanf("%lf", &b);
+
+    printf("Введите шаг: ");
+    scanf("%lf", &h);
+
+    print_table(choice, a, b, h);
 
     return 0;
 }
